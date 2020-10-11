@@ -1,13 +1,10 @@
 package com.alsharany.criminalintent
 
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,15 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_crime.view.*
-import kotlinx.android.synthetic.main.list_item_police_required_crime.*
 import java.text.DateFormat
 
 private const val TAG = "CrimeListFragment"
 
 class CrimeListFragment : Fragment() {
-    private val crimeListViewModel: CrimeListViewMode by lazy {
-        ViewModelProviders.of(this).get(CrimeListViewMode::class.java)
+    private val crimeListViewModel: CrimeListViewModel by lazy {
+        ViewModelProviders.of(this).get(CrimeListViewModel::class.java)
     }
     private lateinit var crimeRecyclerView: RecyclerView
     private var adapter: CrimeAdapter? = null

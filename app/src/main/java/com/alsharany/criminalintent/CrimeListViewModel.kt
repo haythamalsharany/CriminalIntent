@@ -2,10 +2,11 @@ package com.alsharany.criminalintent
 
 import androidx.lifecycle.ViewModel
 
-class CrimeListViewMode :ViewModel() {
-    val crimes= mutableListOf<Crime>()
+class CrimeListViewModel : ViewModel() {
+    val crimes = mutableListOf<Crime>()
+
     init {
-        for(i in 0 until  100){
+        /*for(i in 0 until  100){
             val crime=Crime()
             crime.title="crime #$i"
             crime.isSolved=i%2==0
@@ -15,6 +16,8 @@ class CrimeListViewMode :ViewModel() {
             else
                 2
             crimes+=crime
-        }
+        }*/
+        val crimeRepository = CrimeRepository.get()
+        val crimes = crimeRepository.getCrimes()
     }
 }

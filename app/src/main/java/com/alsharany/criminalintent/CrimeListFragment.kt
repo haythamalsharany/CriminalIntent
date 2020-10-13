@@ -64,8 +64,8 @@ private fun updateUI(crimes: List<Crime>) {
     crimeRecyclerView.adapter = adapter
 }
 
-abstract open class CrimeHolder(view: View) : RecyclerView.ViewHolder(view) {
-    abstract open fun bind(item: Crime)
+abstract class CrimeHolder(view: View) : RecyclerView.ViewHolder(view) {
+    abstract fun bind(item: Crime)
 
 }
 
@@ -117,7 +117,7 @@ private inner class NormalCrimeHolder(view: View) : CrimeHolder(view),
 
 
         override fun getItemViewType(position: Int): Int {
-            return if (crimes[position].isSolved == true)
+            return if (crimes[position].isSolved == false)
                 return requiredCrime
             else
                 return normalCrime

@@ -8,4 +8,4 @@ data class Crime(@PrimaryKey val id:UUID=UUID.randomUUID(),
                  var title:String="",
                  val date:Date=Date(),
                  var isSolved:Boolean=false,
-                 var requiredPolice:Int=0)
+                 /*var requiredPolice:Int=0*/)

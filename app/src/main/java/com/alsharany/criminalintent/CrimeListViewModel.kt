@@ -1,9 +1,11 @@
 package com.alsharany.criminalintent
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 class CrimeListViewModel : ViewModel() {
-    val crimes = mutableListOf<Crime>()
+    var crimeRepository :CrimeRepository?=null
+    var crimeListLiveData:LiveData<List<Crime>>?=null
 
     init {
         /*for(i in 0 until  100){
@@ -17,7 +19,7 @@ class CrimeListViewModel : ViewModel() {
                 2
             crimes+=crime
         }*/
-        val crimeRepository = CrimeRepository.get()
-        val crimes = crimeRepository.getCrimes()
+        crimeRepository = CrimeRepository.get()
+           crimeListLiveData = crimeRepository!!.getCrimes()
     }
 }

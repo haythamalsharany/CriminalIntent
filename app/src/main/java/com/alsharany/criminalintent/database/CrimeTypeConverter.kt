@@ -1,7 +1,5 @@
 package com.alsharany.criminalintent.database
 
-import android.animation.TypeConverter
-import androidx.room.TypeConverters
 import java.util.*
 
 class CrimeTypeConverter  {

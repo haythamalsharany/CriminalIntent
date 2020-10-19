@@ -1,7 +1,6 @@
 package com.alsharany.criminalintent.database
 
 import androidx.room.Database
-import androidx.room.Entity
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.alsharany.criminalintent.Crime

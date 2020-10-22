@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 class CrimeListViewModel : ViewModel() {
-    var crimeRepository: CrimeRepository? = null
+    private var crimeRepository: CrimeRepository? = null
     var crimeListLiveData: LiveData<List<Crime>>? = null
 
     init {

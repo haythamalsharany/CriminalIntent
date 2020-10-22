@@ -63,7 +63,7 @@ class CrimeListFragment : Fragment() {
         noDataTextView = view.findViewById(R.id.empty_list_textview)
         // the next two  lines of code belong to challenge No 13 ch 14
         addCrimeButton = view.findViewById(R.id.addCrimeBtn)
-        noDataTextView.text = "ther is no data"
+        noDataTextView.text = getString(R.string.no_data_message)
         return view
     }
 
@@ -95,7 +95,7 @@ class CrimeListFragment : Fragment() {
     private fun updateUI(crimes: List<Crime>) {
 
         //the next line is belong to challenge 13 ch 14
-        if (!crimes.isEmpty()) {
+        if (crimes.isNotEmpty()) {
             adapter = CrimeAdapter()
             //the next two lines are  belong to challenge 13 ch 14
             noDataTextView.visibility = View.GONE
@@ -120,7 +120,6 @@ class CrimeListFragment : Fragment() {
         androidx.recyclerview.widget.ListAdapter<Crime , RecyclerView.ViewHolder>(CrimeDiffUtil()) {
         private val requiredCrime = 1
         private val normalCrime = 2
-        private val emptyCrime = 0
 
 
         private inner class NormalCrimeHolder(view: View) : RecyclerView.ViewHolder(view) ,

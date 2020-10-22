@@ -1,6 +1,7 @@
 package com.alsharany.criminalintent
 
 import DatePickerFragment
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -52,10 +53,6 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
         dateButton = view.findViewById(R.id.requiredcrime_date) as Button
         timeButton = view.findViewById(R.id.requiredcrime_time) as Button
         solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
-//        dateButton.apply {
-//            text = crime.date.toString()
-//            isEnabled = false
-//        }
 
 
         return view
@@ -118,6 +115,7 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
     }
 
 
+    @SuppressLint("SimpleDateFormat")
     private fun updateUI() {
         titleField.setText(crime.title)
         dateButton.text =
@@ -155,16 +153,10 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
         updateUI()
     }
 
-    override fun onTimeSelected(time: Date) {
-        crime.date = time
+    override fun onTimeSelected(date: Date) {
+        crime.date = date
         updateUI()
     }
 
 
-//    override fun onTimeSelected(hour: Int , minute: Int) {
-//        this.hour=hour
-//        this.minute=minute
-//        updateUI()
-//
-//    }
 }

@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import java.text.DateFormat
 import java.util.*
 import kotlin.time.ExperimentalTime
+import java.text.SimpleDateFormat as SimpleDateFormat1
 
 private const val ARG_CRIME_ID = "crime_id"
 private const val DIALOG_DATE = "DialogDate"
@@ -121,7 +122,7 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
         titleField.setText(crime.title)
         dateButton.text =
             DateFormat.getDateInstance(DateFormat.FULL).format(this.crime.date).toString()
-        timeButton.text = DateFormat.getTimeInstance(DateFormat.SHORT).format(crime.date.time)
+        timeButton.text = SimpleDateFormat1("HH:MM").format(crime.date.time)
 
 
         solvedCheckBox.apply {
@@ -155,7 +156,7 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
     }
 
     override fun onTimeSelected(time: Date) {
-
+        crime.date = time
         updateUI()
     }
 

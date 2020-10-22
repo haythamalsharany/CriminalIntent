@@ -61,6 +61,7 @@ class CrimeListFragment : Fragment() {
         // updateUI()
         crimeRecyclerView.adapter = adapter
         noDataTextView = view.findViewById(R.id.empty_list_textview)
+        // the next two  lines of code belong to challenge No 13 ch 14
         addCrimeButton = view.findViewById(R.id.addCrimeBtn)
         noDataTextView.text = "ther is no data"
         return view
@@ -77,6 +78,7 @@ class CrimeListFragment : Fragment() {
                 updateUI(crimes)
             }
         })
+        // the next block of code  belong to challenge No 13 ch 14
         addCrimeButton.setOnClickListener {
             val crime = Crime()
             crimeListViewModel.addCrime(crime)
@@ -92,9 +94,10 @@ class CrimeListFragment : Fragment() {
 
     private fun updateUI(crimes: List<Crime>) {
 
-
+        //the next line is belong to challenge 13 ch 14
         if (!crimes.isEmpty()) {
             adapter = CrimeAdapter()
+            //the next two lines are  belong to challenge 13 ch 14
             noDataTextView.visibility = View.GONE
             addCrimeButton.visibility = View.GONE
 
@@ -103,6 +106,7 @@ class CrimeListFragment : Fragment() {
             val adapterTemp = crimeRecyclerView.adapter as CrimeAdapter
             adapterTemp.submitList(crimes)
         } else {
+            //the next line is belong to challenge 13 ch 14
             crimeRecyclerView.visibility = View.GONE
 
         }

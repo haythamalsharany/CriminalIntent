@@ -32,6 +32,7 @@ private const val REQUEST_TIME = 1
 private const val REQUEST_CONTACT = 1
 
 
+
 class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
     TimePickerFragment.TimeCallbacks {
     private lateinit var crime: Crime
@@ -39,6 +40,9 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
     private lateinit var dateButton: Button
     private lateinit var timeButton: Button
     private lateinit var crimeSuspectButton: Button
+
+    //next line belong to challenge 14 ch 15
+    private lateinit var crimeCallSuspectButton: Button
     private lateinit var crimeReportButton: Button
     private lateinit var solvedCheckBox: CheckBox
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
@@ -63,6 +67,8 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
         dateButton = view.findViewById(R.id.requiredcrime_date) as Button
         timeButton = view.findViewById(R.id.requiredcrime_time) as Button
         crimeSuspectButton = view.findViewById(R.id.crime_suspect) as Button
+        //next line belong to challenge 14 ch 15
+        crimeCallSuspectButton = view.findViewById(R.id.crime_call_suspect) as Button
         crimeReportButton = view.findViewById(R.id.crime_report) as Button
         solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
 
@@ -143,10 +149,19 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
         }
         crimeSuspectButton.apply {
             val pickContactIntent =
-                Intent(Intent.ACTION_PICK , ContactsContract.Contacts.CONTENT_URI)
+                Intent(Intent.ACTION_PICK , ContactsContract.Contacts.CONTENT_URI).apply {
+                    type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
+                }
             setOnClickListener {
                 startActivityForResult(pickContactIntent , REQUEST_CONTACT)
             }
+        }
+        //next block belong to challenge 14 ch 15
+        crimeCallSuspectButton.setOnClickListener {
+            val callContactIntent = Intent(Intent.ACTION_DIAL)
+            callContactIntent.data = Uri.parse("tel:${crime.suspectPhone}")
+            startActivity(callContactIntent)
+
         }
     }
 
@@ -157,7 +172,13 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
             requestCode == REQUEST_CONTACT && data != null -> {
                 val contactUri: Uri? = data.data
                 // Specify which fields you want your query to return values for
-                val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
+                val queryFields = arrayOf(
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME ,
+                    //next line belong to challenge 14 ch 15
+                    ContactsContract.CommonDataKinds.Phone.NUMBER
+                )
+
+
                 // Perform your query - the contactUri is like a "where" clause here
                 val cursor = contactUri?.let {
                     requireActivity().contentResolver.query(it , queryFields , null , null , null)
@@ -171,9 +192,12 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
                     // that is your suspect's name
                     it.moveToFirst()
                     val suspect = it.getString(0)
+                    //next line belong to challenge 14 ch 15
+                    crime.suspectPhone = it.getString(1)
                     crime.suspect = suspect
                     crimeDetailViewModel.saveCrime(crime)
                     crimeSuspectButton.text = suspect
+
                 }
             }
         }
@@ -189,7 +213,9 @@ class CrimeFragment : Fragment() , DatePickerFragment.DateCallbacks ,
 
         if (crime.suspect.isNotEmpty()) {
             crimeSuspectButton.text = crime.suspect
-        }
+            crimeCallSuspectButton.visibility = View.VISIBLE
+        } else
+            crimeCallSuspectButton.visibility = View.GONE
         solvedCheckBox.apply {
             isChecked = crime.isSolved
             jumpDrawablesToCurrentState()

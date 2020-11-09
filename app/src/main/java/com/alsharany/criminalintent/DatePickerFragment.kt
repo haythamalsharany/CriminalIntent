@@ -1,3 +1,5 @@
+package com.alsharany.criminalintent
+
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.icu.util.Calendar
@@ -21,7 +23,7 @@ class DatePickerFragment : DialogFragment() {
                 }
 
             }
-        val calendar = if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        val calendar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
             Calendar.getInstance()
         } else {

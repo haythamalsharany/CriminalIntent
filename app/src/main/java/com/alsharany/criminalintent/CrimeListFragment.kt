@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.File
 import java.text.DateFormat
 import java.util.*
 
 private const val TAG = "CrimeListFragment"
-
 class CrimeListFragment : Fragment() {
     interface Callbacks {
         fun onCrimeSelected(crimeId: UUID)
@@ -29,6 +29,9 @@ class CrimeListFragment : Fragment() {
     private lateinit var crimeRecyclerView: RecyclerView
     private lateinit var noDataTextView: TextView
     private lateinit var addCrimeButton: Button
+    private lateinit var photoFile: File
+
+
     private var adapter: CrimeAdapter? = CrimeAdapter()
 
     companion object {
@@ -55,13 +58,11 @@ class CrimeListFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_crime_list , container , false)
         crimeRecyclerView = view.findViewById(R.id.crime_recycler_view) as RecyclerView
-
-
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
-        // updateUI()
         crimeRecyclerView.adapter = adapter
+
+
         noDataTextView = view.findViewById(R.id.empty_list_textview)
-        // the next two  lines of code belong to challenge No 13 ch 14
         addCrimeButton = view.findViewById(R.id.addCrimeBtn)
         noDataTextView.text = getString(R.string.no_data_message)
         return view
@@ -74,7 +75,9 @@ class CrimeListFragment : Fragment() {
                 Log.i(
                     TAG ,
                     "Got crimes ${crimes.size}"
+
                 )
+
                 updateUI(crimes)
             }
         })
@@ -93,29 +96,17 @@ class CrimeListFragment : Fragment() {
     }
 
     private fun updateUI(crimes: List<Crime>) {
-
-        //the next line is belong to challenge 13 ch 14
-        if (crimes.isNotEmpty()) {
             adapter = CrimeAdapter()
-            //the next two lines are  belong to challenge 13 ch 14
-            noDataTextView.visibility = View.GONE
-            addCrimeButton.visibility = View.GONE
-
             crimeRecyclerView.adapter = adapter
-            // some edit belonge to challenage No.11
             val adapterTemp = crimeRecyclerView.adapter as CrimeAdapter
             adapterTemp.submitList(crimes)
-        } else {
-            //the next line is belong to challenge 13 ch 14
-            crimeRecyclerView.visibility = View.GONE
 
-        }
 
     }
 
 
     inner class CrimeAdapter :
-    // some edit belonge to challenage No.11
+    // some edit belong to challenge No.11
     // change extend from RecyclerView.Adapter to  androidx.recyclerview.widget.ListAdapter<Crime,RecyclerView.ViewHolder>
         androidx.recyclerview.widget.ListAdapter<Crime , RecyclerView.ViewHolder>(CrimeDiffUtil()) {
         private val requiredCrime = 1
@@ -128,36 +119,47 @@ class CrimeListFragment : Fragment() {
             private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
             private val titleTextView: TextView = itemView.findViewById(R.id.requiredcrime_title)
             private val dateTextView: TextView = itemView.findViewById(R.id.requiredcrime_date)
+            private var crimeImageView: ImageView = itemView.findViewById(R.id.crime_imageView)
 
             init {
                 itemView.setOnClickListener(this)
+
             }
 
             override fun onClick(v: View) {
-                //Toast.makeText(context, "${crime.title} pressed!", Toast.LENGTH_SHORT).show()
+
                 callbacks?.onCrimeSelected(crime.id)
+
             }
 
-            fun bind(item: Crime) {
 
+            fun bind(item: Crime) {
                 this.crime = item
 
                 titleTextView.text = this.crime.title
                 dateTextView.text =
-                    DateFormat.getDateInstance(DateFormat.FULL).format(this.crime.date).toString()
+                    DateFormat.getDateInstance(DateFormat.LONG)
+                        .format(this.crime.date).toString()
                 solvedImageView.visibility = if (item.isSolved) {
                     View.VISIBLE
                 } else
                     View.GONE
+
+                setImageInImageView(crimeImageView , crime)
+
             }
+
+
         }
 
 
         private inner class RequirredCrimeHolder(view: View) : RecyclerView.ViewHolder(view) ,
             View.OnClickListener {
             private lateinit var crime: Crime
-            val requiredCrimeTextView: TextView = itemView.findViewById(R.id.requiredcrime_title)
+            val requiredCrimeTextView: TextView =
+                itemView.findViewById(R.id.requiredcrime_title)
             val requireddateTextView: TextView = itemView.findViewById(R.id.requiredcrime_date)
+            private var crimeImageView: ImageView = itemView.findViewById(R.id.crime_imageView)
 
             // private val requiredContactButton: Button = itemView.findViewById(R.id.contactPoliceBTN)
             init {
@@ -169,18 +171,46 @@ class CrimeListFragment : Fragment() {
 
                 requiredCrimeTextView.text = this.crime.title
                 requireddateTextView.text =
-                    DateFormat.getDateInstance(DateFormat.FULL).format(this.crime.date).toString()
+                    DateFormat.getDateInstance(DateFormat.LONG).format(this.crime.date)
+                        .toString()
+                setImageInImageView(crimeImageView , crime)
+
+
             }
 
             override fun onClick(v: View?) {
                 callbacks?.onCrimeSelected(crime.id)
             }
 
+
+        }
+
+        fun setImageInImageView(crimeImageView: ImageView , crime: Crime) {
+            photoFile = crimeListViewModel.getPhotoFile(crime)
+            if (photoFile.exists()) {
+                var pictureUtils = PictureUtils()
+                val bitmap = pictureUtils.getScaledBitmap(
+                    photoFile.path ,
+                    requireActivity()
+                )
+                crimeImageView.setImageBitmap(bitmap)
+            } else
+                crimeImageView.setImageDrawable(null)
+
         }
 
 
         override fun getItemViewType(position: Int): Int {
-            // some edit belonge to challenage No.11
+            if (itemCount > 0) {
+                noDataTextView.visibility = View.GONE
+                addCrimeButton.visibility = View.GONE
+
+            } else {
+                noDataTextView.visibility = View.VISIBLE
+                addCrimeButton.visibility = View.VISIBLE
+
+            }
+            // some edit belong to challenge No.11
             //because no list in this type of adapter I change  from crimes[position] to getItem(position)
 
             return if (!getItem(position).isSolved) {
@@ -223,7 +253,7 @@ class CrimeListFragment : Fragment() {
 
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            // some edit belonge to challenage No.11
+            // some edit belong to challenge No.11
             //because no list in this type of adapter I change  from crimes[position] to getItem(position)
             val crime = getItem(position)
             if (holder is RequirredCrimeHolder)
@@ -237,7 +267,7 @@ class CrimeListFragment : Fragment() {
     }
 
 
-    // some edit belonge to challenage No.11
+    // some edit belong to challenge No.11
     // create  crimeDiffUtil to check diffirence between items
     private class CrimeDiffUtil : DiffUtil.ItemCallback<Crime>() {
         override fun areItemsTheSame(oldItem: Crime , newItem: Crime): Boolean {
@@ -277,4 +307,5 @@ class CrimeListFragment : Fragment() {
         }
 
     }
+
 }

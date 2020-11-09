@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">بلاغات</string>
+    <string name="crime_title_hint">ادخل عنوان الجريمة.</string>
+    <string name="crime_title_label">عنوان</string>
+    <string name="crime_details_label">التفاصيل</string>
+    <string name="crime_solved_label">"هل تم ضبطها "</string>
+    <string name="new_crime">جريمة جديدة</string>
+    <string name="no_data_message">لا يوجد اي جريمة</string>
+    <string name="crime_suspect_text">اختيار المشتبه به</string>
+    <string name="crime_report_text">مشاركة الجريمة</string>
+    <string name="crime_report">"%1$s!     تم اكتشاف الجريمة في  %2$s. %3$s, و  %4$s    "</string>
+    <string name="crime_report_solved">تم ضبط الحالة</string>
+    <string name="crime_report_unsolved">لم يتم ضبط الحالة</string>
+    <string name="crime_report_no_suspect">لا يوجد المشتبه به</string>
+    <string name="send_report">مشاركة تقرير الجريمة بواسطة</string>
+    <string name="call_suspect">اتصل بالمشتبة</string>
+    <string name="crime_title_police_xml">عنوان الجريمة</string>
+    <string name="contact_police_xml">اتصل بالامن</string>
+    <string name="crime_date_list_xml">تاريخ الجريمة</string>
+    <string name="crime_title_list_xml">عنوان الجريمة</string>
+    <string name="add_crime_fxml">اضافة جريمة</string>
+    <string name="add_crime_xml">اضافة جريمة</string>
+    <string name="requiredcrime_date_xml">تاريخ الجريمة</string>
+    <string name="crime_report_subject">عنوان تقرير الجريمة</string>
+    <string name="crime_report_suspect">المشتبه به هو %s</string>
+</resources>

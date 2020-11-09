@@ -21,4 +21,5 @@ interface CrimeDao {
 
     @Insert
     fun addCrime(crime: Crime)
+
 }

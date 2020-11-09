@@ -5,7 +5,7 @@
     <string name="crime_details_label">Details</string>
     <string name="crime_solved_label">Solved</string>
     <string name="new_crime">New Crime</string>
-    <string name="no_data_message">ther is no data</string>
+    <string name="no_data_message">there is no data</string>
     <string name="crime_suspect_text">Choose Suspect</string>
     <string name="crime_report_text">Send Crime Repor</string>
     <string name="crime_report">%1$s!      The crime was discovered on %2$s. %3$s, and %4$s    </string>
@@ -16,4 +16,14 @@
     <string name="crime_report_subject">CriminalIntent Crime Report</string>
     <string name="send_report">Send crime report via</string>
     <string name="call_suspect">call suspect</string>
+    <string name="requiredcrime_date_xml">requiredcrime date</string>
+    <string name="add_crime_xml">add crime</string>
+    <string name="add_crime_fxml">add crime</string>
+    <string name="crime_title_list_xml">crime title</string>
+    <string name="crime_date_list_xml">crime date</string>
+    <string name="crime_title_police_xml">crime title</string>
+    <string name="contact_police_xml">call police</string>
+    <string name="path_data_menue_xml" translatable="false">M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>
